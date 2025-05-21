@@ -10,7 +10,8 @@ Build a web application that helps logistics planners optimize the loading of tr
 
 ## Milestones
 - ER Diagram
+- Wireframes for pages
 - Technical architecture diagram
 - Running back end project
 - Running front end project connected to back end project
-- ...
+- ... (Start to implement things, focus on 1 MVP step per iteration (small bites, keep simple, add complexity later))
