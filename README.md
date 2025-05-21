@@ -11,7 +11,7 @@ _View the Issues and Projects tabs to see how I'm organizing this project.  Arti
 - As an admin, I want to manage users and trucks.  
 
 ## Milestones
-- ER Diagram
+- ER Diagram (Start 5/2025)
 - Wireframes for pages
 - Technical architecture diagram
 - Running back end project
