@@ -1,6 +1,8 @@
 # LoadPlanner
 Build a web application that helps logistics planners optimize the loading of trucks, trailers, or containers based on cargo dimensions, weight, and delivery destinations.
 
+Helpful overview of [Load Planning Software](https://www.cleveroad.com/blog/load-planning-software)
+
 _View the Issues and Projects tabs to see how I'm organizing this project.  Artifacts of my planning will be hosted here as well (diagrams, documentation, etc)._
 
 ## User stories to cover:  
