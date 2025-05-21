@@ -1,7 +1,7 @@
 # LoadPlanner
 Build a web application that helps logistics planners optimize the loading of trucks, trailers, or containers based on cargo dimensions, weight, and delivery destinations.
 
-* *View the Issues and Projects tabs to see how I'm organizing this project.  Artifacts of my planning will be hosted here as well (diagrams, documentation, etc).* *
+_View the Issues and Projects tabs to see how I'm organizing this project.  Artifacts of my planning will be hosted here as well (diagrams, documentation, etc)._
 
 ## User stories to cover:  
 - As a planner, I want to create a load and add multiple cargo items.  
