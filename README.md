@@ -14,8 +14,9 @@ _View the Issues and Projects tabs to see how I'm organizing this project.  Arti
 
 ## Milestones
 - ER Diagram
-- Wireframes for pages
-- Technical architecture diagram
-- Running back end project
-- Running front end project connected to back end project
+- Basic wireframes for pages
+- Begin front end development.  Use mocked API "back-end".  Build out front end super-Minimally Viable Product.
+- Minimal running back end project connected to front end
+  - Technical architecture diagram?
+- Hook things up "for real", fill out features with functionality and wire through the full stack
 - ... (Start to implement things, focus on 1 MVP step per iteration (small bites, keep simple, add complexity later))
