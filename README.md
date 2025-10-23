@@ -13,7 +13,7 @@ _View the Issues and Projects tabs to see how I'm organizing this project.  Arti
 - As an admin, I want to manage users and trucks.  
 
 ## Milestones
-- ER Diagram
+- ER Diagram (DONE)
 - Basic wireframes for pages
 - Begin front end development.  Use mocked API "back-end".  Build out front end super-Minimally Viable Product.
 - Minimal running back end project connected to front end
