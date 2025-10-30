@@ -1,4 +1,8 @@
 # LoadPlanner
+See progress here:
+https://jdhrzg.github.io/LoadPlanner/src/
+
+## Goal
 Build a web application that helps logistics planners optimize the loading of trucks, trailers, or containers based on cargo dimensions, weight, and delivery destinations.
 
 Helpful overview of [Load Planning Software](https://www.cleveroad.com/blog/load-planning-software)
