@@ -8,22 +8,40 @@
     <body>
         <div class="tab-container">
             <div id="tab-buttons">
-                <button id="tab-button-1" class="tab-button active" onclick="tabButtonClick(event)">Tab 1
-                </button><button id="tab-button-2" class="tab-button" onclick="tabButtonClick(event)">Tab 2
-                </button><button id="tab-button-3" class="tab-button" onclick="tabButtonClick(event)">Tab 3
+                <button id="tab-button-1" class="button-base tab-button active" onclick="tabButtonClick(event)">Tab 1
+                </button><button id="tab-button-2" class="button-base tab-button" onclick="tabButtonClick(event)">Tab 2
+                </button><button id="tab-button-3" class="button-base tab-button" onclick="tabButtonClick(event)">Tab 3
                 </button>
             </div>
 
             <div id="tab-content-1" class="tab-content active">
-                <h1>Tab 1</h1>
+                <div class="sidebar-content">
+                    <h3>Tab Sidebar 1</h3>
+                </div>
+                <div class="main-content">
+                    <button class="button-base toggle-sidebar-button" onclick="toggleSidebar(event)">></button>
+                    <h3>Tab Main 1</h3>
+                </div>
             </div>
 
             <div id="tab-content-2" class="tab-content">
-                <h1>Tab 2</h1>
+                <div class="sidebar-content">
+                    <h3>Tab Sidebar 2</h3>
+                </div>
+                <div class="main-content">
+                    <button class="button-base toggle-sidebar-button" onclick="toggleSidebar(event)">></button>
+                    <h3>Tab Main 2</h3>
+                </div>
             </div>
 
             <div id="tab-content-3" class="tab-content">
-                <h1>Tab 3</h1>
+                <div class="sidebar-content">
+                    <h3>Tab Sidebar 3</h3>
+                </div>
+                <div class="main-content">
+                    <button class="button-base toggle-sidebar-button" onclick="toggleSidebar(event)">></button>
+                    <h3>Tab Main 3</h3>
+                </div>
             </div>
         </div>
     </body>
