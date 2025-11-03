@@ -54,6 +54,28 @@
     width: 200px;
 }
 
+.sidebar-group {
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    margin: 5px;
+    padding: 5px;
+}
+
+.sidebar-group-header {
+    display: flex;
+}
+
+.sidebar-group-header-add {
+    margin-left: auto;
+}
+
+.sidebar-group-list-item {
+    background-color: #dddddd;
+    border: 1px solid #aaaaaa;
+    padding: 5px;
+    margin: 5px 0px 0px 0px;
+}
+
 .main-content {
     transition: 0.5s;
 }
