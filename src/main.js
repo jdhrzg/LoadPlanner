@@ -1,35 +1,73 @@
 window.onload = function () {
-  let tabContent1 = document.getElementById("tab-content-1");
-  for (let child of tabContent1.children) {
-    if (child.classList.contains("sidebar-content")) {
-      child.appendChild(addSidebarGroup(1));
-    }
-  }
+  let element = this.document.getElementById("sidebar-content-load-view");
+  element.appendChild(addSidebarGroup());
 };
 
-function addSidebarGroup(groupNumber) {
-  let groupDiv = document.createElement("div");
-  groupDiv.id = `sidebar-group-${groupNumber}`;
-  groupDiv.className = "sidebar-group";
+function addSidebarGroup() {
+  let nextIdIdentifier = getNextIdIdentifierByClassName("sidebar-group", "number");
 
-  groupDiv.innerHTML = `
-  <div class='sidebar-group-header'>
-    <div class="sidebar-group-header-title">Group ${groupNumber}</div>
-    <button class="sidebar-group-header-add">+</button>
-  </div>
-  <div class='sidebar-group-list'>
-    <div class='sidebar-group-list-item'>
-      <label for='length'>L:</label>
-      <input type="text" id='length'></input>
-      <label for='width'>W:</label>
-      <input type="text" id='width'></input>
-      <label for='height'>H:</label>
-      <input type="text" id='height'></input>
+  let groupDiv = document.createElement("div");
+  groupDiv.className = "sidebar-group";
+  groupDiv.id = `sidebar-group-${nextIdIdentifier}`;
+
+  groupDiv.innerHTML =
+    `
+    <div class='sidebar-group-header'>
+      <div class="sidebar-group-header-title">Group ${nextIdIdentifier}</div>
+      <button class="sidebar-group-header-add">+</button>
     </div>
-  </div>
-  `;
+    <div class='sidebar-group-list'>
+    </div>
+    `;
 
   return groupDiv;
+}
+
+function addSidebarGroupListItem(insertIntoSidebarGroupNumber) {
+  let insertIntoSidebarGroup = document.getElementById(
+    `sidebar-group-${groupNumber}`
+  );
+
+  let insertIntoSidebarGroupList = undefined;
+  for (let child of insertIntoSidebarGroup.children) {
+    if (child.className.contains("sidebar-group-list")) {
+      insertIntoSidebarGroupList = child;
+    }
+  }
+
+  let sidebarGroupListItemLetter = getNextIdIdentifierByClassName("sidebar-group-list-item", "letter");
+  let sidebarGroupListItemId = `sidebar-group-list-item-${sidebarGroupListItemLetter}`;
+
+  insertIntoSidebarGroupList.appendChild(createNewSidebarGroupListItem());
+}
+
+function getNextIdIdentifierByClassName(className, letterOrNumber) {
+  let largestSidebarGroupNumber = undefined;
+  for (let element in document.getElementsByClassName(className)) {
+    let sidebarGroupNumber = element.id.split("-").at(-1);
+    if (sidebarGroupNumber > largestSidebarGroupNumber) {
+      largestSidebarGroupNumber = sidebarGroupNumber;
+    }
+  }  
+  if (largestSidebarGroupNumber === undefined) return (letterOrNumber == "letter") ? "A" : 1;
+  else return largestSidebarGroupNumber;
+}
+
+function createNewSidebarGroupListItem(sideBarGroupListItemId) {
+  let newListItem = document.createElement("div");
+  newListItem.id = sideBarGroupListItemId;
+  newListItem.class = "sidebar-group-list-item";
+
+  newListItem.innerHTML = `
+  <label for='length'>L:</label>
+  <input type="text" id='length'></input>
+  <label for='width'>W:</label>
+  <input type="text" id='width'></input>
+  <label for='height'>H:</label>
+  <input type="text" id='height'></input>
+  `;
+
+  return newListItem;
 }
 
 function tabButtonClick(event) {
