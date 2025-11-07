@@ -4,46 +4,40 @@ window.onload = function () {
 };
 
 function addSidebarGroup() {
-  let nextIdIdentifier = getNextIdIdentifierByClassName("sidebar-group", "number");
+  let nextIdSuffix = getNextIdSuffixByClassName("sidebar-group", "number");
 
   let groupDiv = document.createElement("div");
   groupDiv.className = "sidebar-group";
-  groupDiv.id = `sidebar-group-${nextIdIdentifier}`;
+  groupDiv.id = `sidebar-group-${nextIdSuffix}`;
 
   groupDiv.innerHTML =
     `
     <div class='sidebar-group-header'>
-      <div class="sidebar-group-header-title">Group ${nextIdIdentifier}</div>
+      <div class="sidebar-group-header-title">Group ${nextIdSuffix}</div>
       <button class="sidebar-group-header-add">+</button>
     </div>
     <div class='sidebar-group-list'>
     </div>
     `;
 
+  addSidebarGroupListItem(groupDiv);
+
   return groupDiv;
 }
 
-function addSidebarGroupListItem(insertIntoSidebarGroupNumber) {
-  let insertIntoSidebarGroup = document.getElementById(
-    `sidebar-group-${groupNumber}`
-  );
+function addSidebarGroupListItem(groupHTMLDivElement) {
+  let insertIntoSidebarGroupList = Array.from(groupHTMLDivElement.children).find(child => child.className.includes("sidebar-group-list"));
+  if (insertIntoSidebarGroupList === undefined) return;
 
-  let insertIntoSidebarGroupList = undefined;
-  for (let child of insertIntoSidebarGroup.children) {
-    if (child.className.contains("sidebar-group-list")) {
-      insertIntoSidebarGroupList = child;
-    }
-  }
-
-  let sidebarGroupListItemLetter = getNextIdIdentifierByClassName("sidebar-group-list-item", "letter");
+  let sidebarGroupListItemLetter = getNextIdSuffixByClassName("sidebar-group-list-item", "letter");
   let sidebarGroupListItemId = `sidebar-group-list-item-${sidebarGroupListItemLetter}`;
 
-  insertIntoSidebarGroupList.appendChild(createNewSidebarGroupListItem());
+  insertIntoSidebarGroupList.appendChild(createNewSidebarGroupListItem(sidebarGroupListItemId));
 }
 
-function getNextIdIdentifierByClassName(className, letterOrNumber) {
+function getNextIdSuffixByClassName(className, letterOrNumber) {
   let largestSidebarGroupNumber = undefined;
-  for (let element in document.getElementsByClassName(className)) {
+  for (let element of document.getElementsByClassName(className)) {
     let sidebarGroupNumber = element.id.split("-").at(-1);
     if (sidebarGroupNumber > largestSidebarGroupNumber) {
       largestSidebarGroupNumber = sidebarGroupNumber;
