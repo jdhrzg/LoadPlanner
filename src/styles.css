@@ -76,6 +76,11 @@
     margin: 5px 0px 0px 0px;
 }
 
+.sidebar-group-list-item-label {
+    margin: 5px;
+    background-color: #999999;
+}
+
 .main-content {
     transition: 0.5s;
 }
