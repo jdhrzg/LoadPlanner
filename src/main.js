@@ -44,13 +44,15 @@ function createNewSidebarGroupListItem(sidebarGroupListItemIdPrefix, sidebarGrou
   newListItem.className = "sidebar-group-list-item";
 
   newListItem.innerHTML = `
-  <label for='length'>L:</label>
-  <input type="text" id='length'></input>
-  <label for='width'>W:</label>
-  <input type="text" id='width'></input>
-  <label for='height'>H:</label>
-  <input type="text" id='height'></input>
-  <div class="sidebar-group-list-item-label">${sidebarGroupListItemIdSuffix}</div>
+  <div class="sidebar-group-list-item-container">
+    <label for='length'>L:</label>
+    <input type="text" id='length'></input>
+    <label for='width'>W:</label>
+    <input type="text" id='width'></input>
+    <label for='height'>H:</label>
+    <input type="text" id='height'></input>
+    <div class="sidebar-group-list-item-label">${sidebarGroupListItemIdSuffix}</div>
+  </div>
   `;
 
   return newListItem;
@@ -83,7 +85,6 @@ function getNextIdSuffixByClassName(className, letterOrNumber) {
   }
 }
 
-// Display suffix in UI, add remove button?
 function sidebarAddGroupListItemClick(event) {
   addSidebarGroupListItem(event.currentTarget.parentNode.parentNode);
 }
