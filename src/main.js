@@ -45,6 +45,7 @@ function createNewSidebarGroupListItem(sidebarGroupListItemIdPrefix, sidebarGrou
 
   newListItem.innerHTML = `
   <div class="sidebar-group-list-item-container">
+    <button class="sidebar-group-list-item-delete" onclick="sidebarGroupListItemDeleteClick(event)">x</button>
     <label for='length'>L:</label>
     <input type="text" id='length'></input>
     <label for='width'>W:</label>
@@ -56,6 +57,12 @@ function createNewSidebarGroupListItem(sidebarGroupListItemIdPrefix, sidebarGrou
   `;
 
   return newListItem;
+}
+
+function sidebarGroupListItemDeleteClick(event) {
+  if (document.getElementsByClassName("sidebar-group-list-item").length <= 1) return;
+  
+  document.getElementById(event.currentTarget.parentNode.parentNode.id).remove();
 }
 
 function getNextIdSuffixByClassName(className, letterOrNumber) {
