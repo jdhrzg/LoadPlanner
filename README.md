@@ -2,7 +2,17 @@
 See progress here:
 https://jdhrzg.github.io/LoadPlanner/src/
 
-**NOTE: Right now I am building out a very simple start to this app in vanilla JavaScript, HTML and CSS to learn the mechanics of that (pains in that).  Soon I will swap every thing over to React and really begin this project in earnest.**
+**NOTE: Right now I am building out a very simple start to this app in vanilla JavaScript, HTML and CSS to better learn the browser and the underlying mechanics of web dev (and to experience the pains in that).  Soon I will swap the front end over to React and begin this project in earnest.**
+
+## Stack
+The plan is for this to have a React front end, with C# Asp.Net Core API, a Postgres SQL DB and to be hosted on Azure or AWS.
+
+## Why a Load Planner app?
+It fits in my professional dev niche of logistics and/or blue-collar industry focused software.  I love visualizing data and mathy problems.  Also, this seemed like a perfectly large undertaking... big enough to be "real" but small enough to finish.  ...I think it could be sold someday too.
+
+I plan on keeping this project alive for a long time... rewriting and maintaining it for fun or to learn something new.  
+Ex: works on Azure, how about AWS?  
+Ex: New version of .Net, upgrade this to learn.
 
 ## Goal
 Build a web application that helps logistics planners optimize the loading of trucks, trailers, or containers based on cargo dimensions, weight, and delivery destinations.
