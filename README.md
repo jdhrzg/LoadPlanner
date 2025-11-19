@@ -2,7 +2,7 @@
 See progress here:
 https://jdhrzg.github.io/LoadPlanner/src/
 
-**NOTE: Right now I am building out a very simple start to this app in vanilla JavaScript, HTML and CSS to learn the pains in that.  Soon I will swap every thing over to React and really begin this project in earnest.**
+**NOTE: Right now I am building out a very simple start to this app in vanilla JavaScript, HTML and CSS to learn the mechanics of that (pains in that).  Soon I will swap every thing over to React and really begin this project in earnest.**
 
 ## Goal
 Build a web application that helps logistics planners optimize the loading of trucks, trailers, or containers based on cargo dimensions, weight, and delivery destinations.
