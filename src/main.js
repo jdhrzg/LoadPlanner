@@ -1,19 +1,47 @@
+const SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME = "sidebar-group-list-item";
+const SIDEBAR_GROUP_CLASS_NAME = "sidebar-group";
+
 window.onload = function () {
   let element = this.document.getElementById("sidebar-content-load-view");
-  element.appendChild(addSidebarGroup());
+
+  if (!doesSavedSidebarGroupListItemsExist()) {
+    element.appendChild(addSidebarGroupWithDefaultListItem());
+  } else {
+    element.appendChild(addSidebarGroupWithSavedListItems());
+  }  
 };
 
 // 
 // SECTION: Add Sidebar Group / Add Sidebar Group List Item
 //
-function addSidebarGroup() {
+function addSidebarGroupWithDefaultListItem() {
+  let sidebarGroup = createNewSidebarGroup();
+
+  let sidebarGroupListItemIdSuffix = getNextIdSuffixByClassName("sidebar-group-list-item", "letter");
+  addSidebarGroupListItem(sidebarGroup, sidebarGroupListItemIdSuffix);
+
+  return sidebarGroup;
+}
+
+function addSidebarGroupWithSavedListItems() {
+  let sidebarGroup = createNewSidebarGroup();
+
+  let savedSidebarGroupListItemSuffixes = getSavedSidebarGroupListItemSuffixes();
+  for (let suffix of savedSidebarGroupListItemSuffixes) {
+    addSidebarGroupListItem(sidebarGroup, suffix);
+  }
+
+  return sidebarGroup;
+}
+
+function createNewSidebarGroup() {
   let nextIdSuffix = getNextIdSuffixByClassName("sidebar-group", "number");
 
-  let groupDiv = document.createElement("div");
-  groupDiv.className = "sidebar-group";
-  groupDiv.id = `sidebar-group-${nextIdSuffix}`;
+  let sidebarGroup = document.createElement("div");
+  sidebarGroup.className = SIDEBAR_GROUP_CLASS_NAME;
+  sidebarGroup.id = `${SIDEBAR_GROUP_CLASS_NAME}-${nextIdSuffix}`;
 
-  groupDiv.innerHTML =
+  sidebarGroup.innerHTML =
     `
     <div class='sidebar-group-header'>
       <div class="sidebar-group-header-title">Group ${nextIdSuffix}</div>
@@ -22,26 +50,24 @@ function addSidebarGroup() {
     <div class='sidebar-group-list'>
     </div>
     `;
-
-  addSidebarGroupListItem(groupDiv);
-
-  return groupDiv;
+    
+  return sidebarGroup;
 }
 
-function addSidebarGroupListItem(groupHTMLDivElement) {
-  let insertIntoSidebarGroupList = Array.from(groupHTMLDivElement.children).find(child => child.className.includes("sidebar-group-list"));
+function addSidebarGroupListItem(parentSidebarGroup, sidebarGroupListItemIdSuffix) {
+  let insertIntoSidebarGroupList = Array.from(parentSidebarGroup.children).find(child => child.className.includes("sidebar-group-list"));
   if (insertIntoSidebarGroupList === undefined) return;
 
-  let sidebarGroupListItemIdSuffix = getNextIdSuffixByClassName("sidebar-group-list-item", "letter");
-  let sidebarGroupListItemIdPrefix = "sidebar-group-list-item";
-
-  insertIntoSidebarGroupList.appendChild(createNewSidebarGroupListItem(sidebarGroupListItemIdPrefix, sidebarGroupListItemIdSuffix));
+  let newSidebarGroupListItem = createNewSidebarGroupListItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME, sidebarGroupListItemIdSuffix);
+  insertIntoSidebarGroupList.appendChild(newSidebarGroupListItem);
+  
+  saveAllChildSidebarGroupListItems(insertIntoSidebarGroupList);
 }
 
-function createNewSidebarGroupListItem(sidebarGroupListItemIdPrefix, sidebarGroupListItemIdSuffix) {
+function createNewSidebarGroupListItem(sidebarGroupListItemClassName, sidebarGroupListItemIdSuffix) {
   let newListItem = document.createElement("div");
-  newListItem.id = `${sidebarGroupListItemIdPrefix}-${sidebarGroupListItemIdSuffix}`;
-  newListItem.className = "sidebar-group-list-item";
+  newListItem.id = `${sidebarGroupListItemClassName}-${sidebarGroupListItemIdSuffix}`;
+  newListItem.className = sidebarGroupListItemClassName;
 
   newListItem.innerHTML = `
   <div class="sidebar-group-list-item-container">
@@ -62,8 +88,41 @@ function createNewSidebarGroupListItem(sidebarGroupListItemIdPrefix, sidebarGrou
 function sidebarGroupListItemDeleteClick(event) {
   if (document.getElementsByClassName("sidebar-group-list-item").length <= 1) return;
   
-  document.getElementById(event.currentTarget.parentNode.parentNode.id).remove();
+  let currentSidebarGroupListItem = event.currentTarget.parentNode.parentNode;
+  let currentSidebarGroupList = currentSidebarGroupListItem.parentNode;
+
+  document.getElementById(currentSidebarGroupListItem.id).remove();
+
+  saveAllChildSidebarGroupListItems(currentSidebarGroupList);
 }
+
+//
+// SECTION: Save / Load Sidebar Group List Items
+//
+function doesSavedSidebarGroupListItemsExist() {
+  return localStorage.getItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME)?.length > 0;
+}
+
+function saveAllChildSidebarGroupListItems(sidebarGroupList) {
+  let sidebarGroupListItemIdSuffixes = [];
+
+  for (let child of Array.from(sidebarGroupList.children).filter(x => x.className == SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME)) {
+    sidebarGroupListItemIdSuffixes.push(child.id.split('-').at(-1));
+  }
+
+  localStorage.setItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME, JSON.stringify(sidebarGroupListItemIdSuffixes));
+}
+
+function getSavedSidebarGroupListItemSuffixes() {
+  let sidebarGroupListItemSuffixes = [];
+
+  if (localStorage.getItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME)?.length > 0) {
+    sidebarGroupListItemSuffixes = JSON.parse(localStorage.getItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME));
+  }
+
+  return sidebarGroupListItemSuffixes;
+}
+
 
 function getNextIdSuffixByClassName(className, letterOrNumber) {
   let largestSidebarGroupSuffix = "";
@@ -93,7 +152,8 @@ function getNextIdSuffixByClassName(className, letterOrNumber) {
 }
 
 function sidebarAddGroupListItemClick(event) {
-  addSidebarGroupListItem(event.currentTarget.parentNode.parentNode);
+  let sidebarGroupListItemIdSuffix = getNextIdSuffixByClassName(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME, "letter");
+  addSidebarGroupListItem(event.currentTarget.parentNode.parentNode, sidebarGroupListItemIdSuffix);
 }
 
 
