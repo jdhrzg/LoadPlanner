@@ -1,5 +1,7 @@
+const SIDEBAR_GROUP_LIST_ITEM_CONTAINER = "sidebar-group-list-item-container";
 const SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME = "sidebar-group-list-item";
 const SIDEBAR_GROUP_CLASS_NAME = "sidebar-group";
+const SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES = SIDEBAR_GROUP_LIST_ITEM_CONTAINER + "-input-values";
 
 window.onload = function () {
   let element = this.document.getElementById("sidebar-content-load-view");
@@ -26,7 +28,7 @@ function addSidebarGroupWithDefaultListItem() {
 function addSidebarGroupWithSavedListItems() {
   let sidebarGroup = createNewSidebarGroup();
 
-  let savedSidebarGroupListItemSuffixes = getSavedSidebarGroupListItemSuffixes();
+  let savedSidebarGroupListItemSuffixes = getSavedValuesById(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME, []);
   for (let suffix of savedSidebarGroupListItemSuffixes) {
     addSidebarGroupListItem(sidebarGroup, suffix);
   }
@@ -65,35 +67,72 @@ function addSidebarGroupListItem(parentSidebarGroup, sidebarGroupListItemIdSuffi
 }
 
 function createNewSidebarGroupListItem(sidebarGroupListItemClassName, sidebarGroupListItemIdSuffix) {
-  let newListItem = document.createElement("div");
-  newListItem.id = `${sidebarGroupListItemClassName}-${sidebarGroupListItemIdSuffix}`;
-  newListItem.className = sidebarGroupListItemClassName;
+  let sidebarGroupListItemX = document.createElement("div");
+  sidebarGroupListItemX.id = `${sidebarGroupListItemClassName}-${sidebarGroupListItemIdSuffix}`;
+  sidebarGroupListItemX.className = sidebarGroupListItemClassName;
+ 
+  let sidebarGroupListItemContainer = document.createElement("div");
+  sidebarGroupListItemContainer.className = SIDEBAR_GROUP_LIST_ITEM_CONTAINER;
 
-  newListItem.innerHTML = `
-  <div class="sidebar-group-list-item-container">
-    <button class="sidebar-group-list-item-delete" onclick="sidebarGroupListItemDeleteClick(event)">x</button>
-    <label for='length'>L:</label>
-    <input type="text" id='length'></input>
-    <label for='width'>W:</label>
-    <input type="text" id='width'></input>
-    <label for='height'>H:</label>
-    <input type="text" id='height'></input>
-    <div class="sidebar-group-list-item-label">${sidebarGroupListItemIdSuffix}</div>
-  </div>
+  sidebarGroupListItemContainer.innerHTML = `
+  <button class="sidebar-group-list-item-delete">x</button>
+  <label for='length-${sidebarGroupListItemIdSuffix}'>L:</label>
+  <input type="text" id='length-${sidebarGroupListItemIdSuffix}'></input>
+  <label for='width-${sidebarGroupListItemIdSuffix}'>W:</label>
+  <input type="text" id='width-${sidebarGroupListItemIdSuffix}'></input>
+  <label for='height-${sidebarGroupListItemIdSuffix}'>H:</label>
+  <input type="text" id='height-${sidebarGroupListItemIdSuffix}'></input>
+  <div class="sidebar-group-list-item-label">${sidebarGroupListItemIdSuffix}</div>
   `;
+  
+  sidebarGroupListItemX.appendChild(sidebarGroupListItemContainer);
 
-  return newListItem;
+  // Attach delete click
+  let sidebarGroupListItemDelete = Array.from(sidebarGroupListItemContainer.childNodes).find(x => x.className == "sidebar-group-list-item-delete");
+  if (sidebarGroupListItemDelete != null) {
+    sidebarGroupListItemDelete.addEventListener('click', function(event) {
+      if (document.getElementsByClassName("sidebar-group-list-item").length <= 1) return;
+  
+      let currentSidebarGroupList = sidebarGroupListItemX.parentNode;
+  
+      document.getElementById(sidebarGroupListItemX.id).remove();
+  
+      saveAllChildSidebarGroupListItems(currentSidebarGroupList);
+    });
+  }
+
+  // Attach blur event
+  for (let element of Array.from(sidebarGroupListItemContainer.childNodes).filter(x => x.tagName == "INPUT")) {
+    element.addEventListener('blur', function(event) {
+      saveInputValueById(event.currentTarget);
+    });
+  }
+
+  // Apply saved values
+  let inputValuesById = getSavedValuesById(SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES, {});
+  for (let [key, value] of Object.entries(inputValuesById)) {
+    if (key.split("-")?.at(-1) === sidebarGroupListItemIdSuffix) {
+      let input = sidebarGroupListItemContainer.querySelector(`#${key}`);
+      input.value = value;
+    }
+  }
+
+  return sidebarGroupListItemX;
 }
 
-function sidebarGroupListItemDeleteClick(event) {
-  if (document.getElementsByClassName("sidebar-group-list-item").length <= 1) return;
+//
+// SECTION: Save / Load Sidebar Group List Item Container Input Values
+//
+function saveInputValueById(inputElement) {
+  let existingInputValuesById = JSON.parse(localStorage.getItem(SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES));
+
+  if (existingInputValuesById == null) {
+    existingInputValuesById = {};
+  }
   
-  let currentSidebarGroupListItem = event.currentTarget.parentNode.parentNode;
-  let currentSidebarGroupList = currentSidebarGroupListItem.parentNode;
+  existingInputValuesById[inputElement.id] = inputElement.value;
 
-  document.getElementById(currentSidebarGroupListItem.id).remove();
-
-  saveAllChildSidebarGroupListItems(currentSidebarGroupList);
+  localStorage.setItem(SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES, JSON.stringify(existingInputValuesById));
 }
 
 //
@@ -113,14 +152,17 @@ function saveAllChildSidebarGroupListItems(sidebarGroupList) {
   localStorage.setItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME, JSON.stringify(sidebarGroupListItemIdSuffixes));
 }
 
-function getSavedSidebarGroupListItemSuffixes() {
-  let sidebarGroupListItemSuffixes = [];
+//
+// SECTION: Generic Save / Load
+//
+function getSavedValuesById(id, defaultReturnValue) {
+  let savedValues = defaultReturnValue;
 
-  if (localStorage.getItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME)?.length > 0) {
-    sidebarGroupListItemSuffixes = JSON.parse(localStorage.getItem(SIDEBAR_GROUP_LIST_ITEM_CLASS_NAME));
+  if (localStorage.getItem(id)?.length > 0) {
+    savedValues = JSON.parse(localStorage.getItem(id));
   }
 
-  return sidebarGroupListItemSuffixes;
+  return savedValues;
 }
 
 
