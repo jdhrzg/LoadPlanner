@@ -98,6 +98,7 @@ function createNewSidebarGroupListItem(sidebarGroupListItemClassName, sidebarGro
       document.getElementById(sidebarGroupListItemX.id).remove();
   
       saveAllChildSidebarGroupListItems(currentSidebarGroupList);
+      removeInputValuesBySidebarGroupListItemSuffix(sidebarGroupListItemIdSuffix);
     });
   }
 
@@ -133,6 +134,14 @@ function saveInputValueById(inputElement) {
   existingInputValuesById[inputElement.id] = inputElement.value;
 
   localStorage.setItem(SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES, JSON.stringify(existingInputValuesById));
+}
+
+function removeInputValuesBySidebarGroupListItemSuffix(sidebarGroupListItemSuffix) {
+  let inputValuesById = getSavedValuesById(SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES, {});
+
+  const inputValuesWithSuffixMatchesRemoved = Object.fromEntries(Object.entries(inputValuesById).filter(([key, _]) => key.split("-").at(-1) !== sidebarGroupListItemSuffix));
+
+  localStorage.setItem(SIDEBAR_GROUP_LIST_ITEM_CONTAINER_INPUT_VALUES, JSON.stringify(inputValuesWithSuffixMatchesRemoved));
 }
 
 //
