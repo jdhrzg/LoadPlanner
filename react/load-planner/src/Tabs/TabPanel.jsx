@@ -1,6 +1,6 @@
 import { useTabsContext } from "./context/TabsContext";
 
-export function TabPanel({ id, children }) {
+export function TabPanel({ children, id }) {
     const { activeTab } = useTabsContext();
 
     if (activeTab !== id) return null;

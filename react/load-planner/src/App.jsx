@@ -8,22 +8,22 @@ import { Tabs } from "./Tabs/Tabs";
 function App() {
   return (
     <>
-      <Tabs defaultTab="profile">
+      <Tabs defaultTab="Tab1">
         <TabList>
-          <Tab id="profile">Profile</Tab>
-          <Tab id="settings">Settings</Tab>
-          <Tab id="billing">Billing</Tab>
+          <Tab id="Tab1">Tab 1</Tab>
+          <Tab id="Tab2">Tab 2</Tab>
+          <Tab id="Tab3">Tab 3</Tab>
         </TabList>
 
         <TabPanels>
-          <TabPanel id="profile">
-            
+          <TabPanel id="Tab1">
+            <h3>Tab 1 stuff here</h3>
           </TabPanel>
-          <TabPanel id="settings">
-            
+          <TabPanel id="Tab2">
+            <h3>Tab 2 stuff here</h3>
           </TabPanel>
-          <TabPanel id="billing">
-            
+          <TabPanel id="Tab3">
+            <h3>Tab 3 stuff here</h3>
           </TabPanel>
         </TabPanels>
       </Tabs>

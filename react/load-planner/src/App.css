@@ -1,0 +1,24 @@
+.tabs {
+  border: 1px solid #ddd;
+}
+
+.tab-list {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.tab.active {
+  border-bottom: 2px solid black;
+  font-weight: bold;
+}
+
+.tab-panels {
+  padding: 1rem;
+}
