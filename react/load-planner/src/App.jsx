@@ -1,9 +1,10 @@
 import "./App.css";
-import { Tab } from "./Tabs/Tab";
-import { TabList } from "./Tabs/TabList";
-import { TabPanel } from "./Tabs/TabPanel";
-import { TabPanels } from "./Tabs/TabPanels";
 import { Tabs } from "./Tabs/Tabs";
+import { TabList } from "./Tabs/TabList";
+import { Tab } from "./Tabs/Tab";
+import { TabPanels } from "./Tabs/TabPanels";
+import { TabPanel } from "./Tabs/TabPanel";
+import { Sidebar } from "./Sidebar/Sidebar";
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
 
         <TabPanels>
           <TabPanel id="Tab1">
-            <h3>Tab 1 stuff here</h3>
+            <div className="tab-sidebar-content-layout">
+              <Sidebar>
+                <h3>Here's a sidebar</h3>
+              </Sidebar>
+              <div className="tab-content-layout">
+                <h3>Tab 1 stuff here</h3>
+              </div>
+            </div>
           </TabPanel>
           <TabPanel id="Tab2">
             <h3>Tab 2 stuff here</h3>

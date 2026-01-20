@@ -1,0 +1,16 @@
+.sidebar {
+    border-width: 0px 2px 0px 0px;
+    border-style: solid;
+    border-color: #cccccc;
+    width: 200px;
+    transition: 0.2s;
+}
+
+.sidebar.collapsed {
+    width: 24px;
+}
+
+.sidebar-toggle {
+    width: 24px;
+    float: right;
+}

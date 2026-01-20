@@ -1,3 +1,4 @@
+import "./Tabs.css";
 import { useState } from "react";
 import { TabsContext } from "./context/TabsContext";
 
