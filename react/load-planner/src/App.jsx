@@ -5,6 +5,7 @@ import { Tab } from "./Tabs/Tab";
 import { TabPanels } from "./Tabs/TabPanels";
 import { TabPanel } from "./Tabs/TabPanel";
 import { Sidebar } from "./Sidebar/Sidebar";
+import { Button } from "@mui/material"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               </Sidebar>
               <div className="tab-content-layout">
                 <h3>Tab 1 stuff here</h3>
+                <Button variant="contained">MUI here!</Button>
               </div>
             </div>
           </TabPanel>
