@@ -1,11 +1,6 @@
 # LoadPlanner
-See progress here:
-https://jdhrzg.github.io/LoadPlanner/src/
-
-**NOTE: Right now I am building out a very simple start to this app in vanilla JavaScript, HTML and CSS to better learn the browser and the underlying mechanics of web dev (and to experience the pains in that).  Soon I will swap the front end over to React and begin this project in earnest.**
-
 ## Stack
-The plan is for this to have a React front end, with C# Asp.Net Core API, a Postgres SQL DB and to be hosted on Azure or AWS.
+The plan is for this to have a MaterialUI + React front end, with C# Asp.Net Core API, EF Core ORM, a Postgres SQL DB and to be hosted on Azure or AWS.
 
 ## Why a Load Planner app?
 It fits in my professional dev niche of logistics and/or blue-collar industry focused software.  I love visualizing data and mathy problems.  Also, this seemed like a perfectly large undertaking... big enough to be "real" but small enough to finish.  ...I think it could be sold someday too.
