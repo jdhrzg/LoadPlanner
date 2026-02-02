@@ -1,4 +1,4 @@
-import "../App.css";
+import "./App.css";
 import * as React from "react";
 import { Box, IconButton, Tab, Tabs } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
