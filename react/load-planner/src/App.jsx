@@ -1,7 +1,7 @@
 import "./App.css";
 import * as React from "react";
 import { Box, IconButton, Tab, Tabs } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Add, ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 function TabPanel(props) {
   const { children, value, index, panelContentSx } = props;
@@ -41,9 +41,21 @@ function TabPanelSidebar({ children, open }) {
   );
 }
 
-function MainTabs() {
+function LoadGroupItem({ group, onClick }) {
+  return (
+    <Box>
+      {group.name}
+      <IconButton onClick={onClick}>
+        <Add />
+      </IconButton>
+    </Box>
+  );
+}
+
+function App() {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [isTabSidebarOpen, setIsTabSidebarOpen] = React.useState(true);
+  const [groups, setGroups] = React.useState([{ id: 1, name: "Group A" }]);
 
   const handleTabsOnChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -51,6 +63,20 @@ function MainTabs() {
 
   const handleTabSidebarClick = () => {
     setIsTabSidebarOpen(!isTabSidebarOpen);
+  };
+
+  const handleAddGroupClick = () => {
+    let maxId = -1;
+    for (let i = 0; i < groups.length; i++) {
+      if (groups[i].id > maxId) {
+        maxId = groups[i].id;
+      }
+    }
+
+    setGroups((prevGroups) => [
+      ...prevGroups,
+      { id: maxId + 1, name: `Group ${String.fromCharCode(65 + maxId)}` },
+    ]);
   };
 
   return (
@@ -68,7 +94,9 @@ function MainTabs() {
         panelContentSx={{ display: "flex" }}
       >
         <TabPanelSidebar open={isTabSidebarOpen}>
-          <Box>Sidebar Content</Box>
+          {groups.map((group) => (
+            <LoadGroupItem key={group.id} group={group} onClick={handleAddGroupClick} />
+          ))}
         </TabPanelSidebar>
         <Box sx={{ position: "relative", padding: 3 }}>
           <IconButton
@@ -90,10 +118,6 @@ function MainTabs() {
       </TabPanel>
     </Box>
   );
-}
-
-function App() {
-  return <MainTabs />;
 }
 
 export default App;
