@@ -1,7 +1,20 @@
 import "./App.css";
 import * as React from "react";
-import { Box, IconButton, Tab, Tabs } from "@mui/material";
-import { Add, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { 
+  Add, 
+  ChevronLeft, 
+  ChevronRight, 
+  Delete 
+} from "@mui/icons-material";
+import {
+  Box,
+  Card,
+  IconButton,
+  Tab,
+  Tabs,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, panelContentSx } = props;
@@ -41,21 +54,77 @@ function TabPanelSidebar({ children, open }) {
   );
 }
 
-function LoadGroupItem({ group, onClick }) {
+function ItemGroup({ group, onClickAddItemGroup }) {
   return (
     <Box>
-      {group.name}
-      <IconButton onClick={onClick}>
+      <Typography variant="h6">{group.name}</Typography>
+      {group.items.map((item) => (
+        <Item key={item.id} parentGroup={group} item={item} />
+      ))}
+      <IconButton onClick={onClickAddItemGroup}>
         <Add />
       </IconButton>
     </Box>
   );
 }
 
+function Item({ parentGroup, item }) {
+  return (
+    <Card
+      variant="outlined"
+      sx={{
+        height: 200,
+        display: "grid",
+        gridTemplateColumns: "1fr auto",
+        gridTemplateRows: "auto 1fr 1fr 1fr",
+        alignItems: "center",
+        padding: 1,
+        margin: 1,
+        "& .MuiTextField-root": { gridColumn: "span 2" },
+        "& .MuiIconButton-root": { gridRow: 1, gridColumn: 2 },
+      }}
+    >
+      <Typography variant="body1">{item.name}</Typography>
+      <IconButton size="small">
+        <Delete />
+      </IconButton>
+      <TextField
+        label="Length"
+        id={`length-${parentGroup.id}`}
+        value={item.length}
+        size="small"
+        variant="outlined"
+      />
+      <TextField
+        label="Width"
+        id={`width-${parentGroup.id}`}
+        value={item.width}
+        size="small"
+        variant="outlined"
+      />
+      <TextField
+        label="Height"
+        id={`height-${parentGroup.id}`}
+        value={item.height}
+        size="small"
+        variant="outlined"
+      />
+    </Card>
+  );
+}
+
 function App() {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [isTabSidebarOpen, setIsTabSidebarOpen] = React.useState(true);
-  const [groups, setGroups] = React.useState([{ id: 1, name: "Group A" }]);
+  const [itemGroups, setItemGroups] = React.useState([
+    {
+      id: 1,
+      name: "Group A",
+      items: [
+        { id: 1, name: "Box of Apples (M)", length: 10, width: 15, height: 20 },
+      ],
+    },
+  ]);
 
   const handleTabsOnChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -65,16 +134,16 @@ function App() {
     setIsTabSidebarOpen(!isTabSidebarOpen);
   };
 
-  const handleAddGroupClick = () => {
+  const handleAddItemGroupClick = () => {
     let maxId = -1;
-    for (let i = 0; i < groups.length; i++) {
-      if (groups[i].id > maxId) {
-        maxId = groups[i].id;
+    for (let i = 0; i < itemGroups.length; i++) {
+      if (itemGroups[i].id > maxId) {
+        maxId = itemGroups[i].id;
       }
     }
 
-    setGroups((prevGroups) => [
-      ...prevGroups,
+    setItemGroups((prevItemGroups) => [
+      ...prevItemGroups,
       { id: maxId + 1, name: `Group ${String.fromCharCode(65 + maxId)}` },
     ]);
   };
@@ -94,8 +163,12 @@ function App() {
         panelContentSx={{ display: "flex" }}
       >
         <TabPanelSidebar open={isTabSidebarOpen}>
-          {groups.map((group) => (
-            <LoadGroupItem key={group.id} group={group} onClick={handleAddGroupClick} />
+          {itemGroups.map((itemGroup) => (
+            <ItemGroup
+              key={itemGroup.id}
+              group={itemGroup}
+              onClickAddItemGroup={handleAddItemGroupClick}
+            />
           ))}
         </TabPanelSidebar>
         <Box sx={{ position: "relative", padding: 3 }}>
@@ -107,14 +180,14 @@ function App() {
           >
             {isTabSidebarOpen ? <ChevronLeft /> : <ChevronRight />}
           </IconButton>
-          <Box>Main Content</Box>
+          <Typography variant="h6">Main Content</Typography>
         </Box>
       </TabPanel>
       <TabPanel value={selectedTab} index={1} panelContentSx={{ padding: 3 }}>
-        Item Two
+        <Typography variant="h6">Item Two</Typography>
       </TabPanel>
       <TabPanel value={selectedTab} index={2} panelContentSx={{ padding: 3 }}>
-        Item Three
+        <Typography variant="h6">Item Three</Typography>
       </TabPanel>
     </Box>
   );
